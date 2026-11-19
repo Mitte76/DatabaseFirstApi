@@ -1,5 +1,6 @@
 using DatabaseFirstApi.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 namespace DatabaseFirstApi
 {
@@ -15,6 +16,11 @@ namespace DatabaseFirstApi
             builder.Services.AddDbContext<OrderDbContext>(options =>
                 options.UseSqlServer(connectionString)
             );
+
+            builder.Services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+            });
 
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
